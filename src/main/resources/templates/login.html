@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bienvenido a Taskflow</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body class="auth-layout">
+<div class="auth-left-panel">
+    <div class="logo-row">
+        <span class="back-icon">&larr;</span>
+        <span class="brand">Taskflow</span>
+    </div>
+
+    <div class="hero-text">
+        <p>“La gestión eficiente de tareas es el primer paso hacia la excelencia operativa.”</p>
+        <p class="quote-author">Equipo Taskflow</p>
+    </div>
+</div>
+
+<div class="auth-right-panel">
+    <div class="auth-card">
+        <h1>Bienvenido a Taskflow</h1>
+        <p class="subtitle">Inicia sesión para gestionar tus tickets</p>
+
+        <!-- Mensajes globales -->
+        <p th:if="${mensajeError}" class="feedback error" th:text="${mensajeError}"></p>
+        <p th:if="${mensajeExito}" class="feedback" th:text="${mensajeExito}"></p>
+
+        <form th:action="@{/login}" th:object="${loginRequest}" method="post">
+            <label>Correo electrónico</label>
+            <input type="email" th:field="*{correo}" placeholder="nombre@instituto.edu"/>
+            <p th:if="${#fields.hasErrors('correo')}"
+               class="field-error"
+               th:errors="*{correo}">Correo inválido</p>
+
+            <label>Contraseña</label>
+            <div class="password-row">
+                <input type="password" th:field="*{password}" placeholder="********"/>
+                <a href="#" class="forgot-link">¿Olvidaste la contraseña?</a>
+            </div>
+            <p th:if="${#fields.hasErrors('password')}"
+               class="field-error"
+               th:errors="*{password}">Contraseña obligatoria</p>
+
+            <button type="submit" class="primary-btn">Iniciar sesión</button>
+        </form>
+
+        <p class="center-text">
+            ¿No tienes una cuenta?
+            <a th:href="@{/registro}">Regístrate aquí</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>

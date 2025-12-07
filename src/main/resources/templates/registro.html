@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crear cuenta de Estudiante</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body class="auth-layout">
+<div class="auth-left-panel">
+    <div class="auth-card wide">
+        <div class="header-row">
+            <span class="close-icon">&times;</span>
+        </div>
+        <h1>Crear una cuenta de Estudiante</h1>
+        <p class="subtitle">Ingresa tus datos para unirte a Taskflow</p>
+
+        <!-- Mensajes globales -->
+        <p th:if="${mensajeError}" class="feedback error" th:text="${mensajeError}"></p>
+        <p th:if="${mensajeExito}" class="feedback" th:text="${mensajeExito}"></p>
+
+        <form th:action="@{/registro}" th:object="${registroRequest}" method="post">
+            <label>Nombre completo</label>
+            <input type="text" th:field="*{nombreCompleto}" placeholder="Tu nombre y apellido"/>
+            <p th:if="${#fields.hasErrors('nombreCompleto')}"
+               class="field-error"
+               th:errors="*{nombreCompleto}">Nombre obligatorio</p>
+
+            <label>Correo electrónico institucional</label>
+            <input type="email" th:field="*{correo}" placeholder="nombre@universidad.edu"/>
+            <p th:if="${#fields.hasErrors('correo')}"
+               class="field-error"
+               th:errors="*{correo}">Correo inválido</p>
+
+            <label>Contraseña</label>
+            <input type="password" th:field="*{password}" placeholder="Mínimo 6 caracteres"/>
+            <p th:if="${#fields.hasErrors('password')}"
+               class="field-error"
+               th:errors="*{password}">Contraseña inválida</p>
+
+            <button type="submit" class="primary-btn">Crear cuenta</button>
+        </form>
+
+        <p class="center-text">
+            ¿Ya tienes una cuenta?
+            <a th:href="@{/login}">Inicia sesión</a>
+        </p>
+    </div>
+</div>
+
+<div class="auth-right-panel">
+    <div class="hero-text bottom">
+        <p>“Una plataforma única para una comunicación fluida y una resolución de problemas eficiente en toda la comunidad educativa.”</p>
+        <p class="quote-author">Equipo Taskflow</p>
+    </div>
+</div>
+
+<!-- Modal de verificación -->
+<div th:if="${verificarCodigoRequest}" class="modal-overlay">
+    <div class="modal">
+        <h2>Verifica tu cuenta</h2>
+        <p>Hemos enviado un código de verificación a tu correo electrónico institucional.</p>
+
+        <form th:action="@{/verificar-codigo}" th:object="${verificarCodigoRequest}" method="post">
+            <label>Código</label>
+            <input type="text" th:field="*{codigo}" placeholder="Ingresa el código"/>
+
+            <input type="hidden" th:field="*{correo}" th:value="${registroRequest.correo}"/>
+
+            <div class="modal-actions">
+                <button type="button" class="secondary-btn">Cancelar</button>
+                <button type="submit" class="primary-btn">Verificar y registrar</button>
+            </div>
+        </form>
+
+        <p th:if="${mensajeError}" class="feedback error" th:text="${mensajeError}"></p>
+        <p th:if="${mensajeExito}" class="feedback" th:text="${mensajeExito}"></p>
+    </div>
+</div>
+</body>
+</html>
+

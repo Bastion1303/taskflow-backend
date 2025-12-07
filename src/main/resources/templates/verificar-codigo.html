@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Verificar cuenta - Taskflow</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body class="auth-layout">
+<div class="modal-overlay">
+    <div class="modal">
+        <h2>Verifica tu cuenta</h2>
+        <p>
+            Hemos enviado un código de verificación a tu correo institucional.
+            Por favor, ingrésalo a continuación para completar tu registro.
+        </p>
+
+        <form th:action="@{/verificar-codigo}" th:object="${verificarCodigoRequest}" method="post">
+            <!-- Correo solo lectura y oculto para evitar errores -->
+            <input type="hidden" th:field="*{correo}"/>
+
+            <label>Código</label>
+            <input type="text" th:field="*{codigo}" placeholder="Ingresa el código"/>
+
+            <div class="modal-actions">
+                <a th:href="@{/registro}" class="secondary-btn">Cancelar</a>
+                <button type="submit" class="primary-btn">Verificar y registrar</button>
+            </div>
+        </form>
+
+        <p th:if="${mensaje}" class="feedback" th:text="${mensaje}"></p>
+
+        <p>
+            ¿Ya verificaste tu cuenta?
+            <a th:href="@{/login}">Ir al login</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>
